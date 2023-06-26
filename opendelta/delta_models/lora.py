@@ -51,7 +51,7 @@ class LowRankLinear(nn.Module):
 
         self.lora_B = nn.Parameter(self.lora_B.half())
 
-        # self.scaling = self.scaling.half()
+      # self.scaling = self.scaling.half()
       #   print("after: ",
       # getattr(x, 'dtype', type(x)),
       # getattr(self.lora_A, 'dtype', type(self.lora_A)),
