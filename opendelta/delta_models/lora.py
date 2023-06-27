@@ -40,23 +40,20 @@ class LowRankLinear(nn.Module):
             nn.init.zeros_(self.lora_B)
 
     def forward(self, x):
-      #   print("before: ",
-      # getattr(x, 'dtype', type(x)),
-      # getattr(self.lora_A, 'dtype', type(self.lora_A)),
-      # getattr(self.lora_B, 'dtype', type(self.lora_B)),
-      # getattr(self.scaling, 'dtype', type(self.scaling)))
+    #     print("before: ",
+    #   getattr(x, 'dtype', type(x)),
+    #   getattr(self.lora_A, 'dtype', type(self.lora_A)),
+    #   getattr(self.lora_B, 'dtype', type(self.lora_B)),
+    #   getattr(self.scaling, 'dtype', type(self.scaling)))
 
-        x = x.half()
-        self.lora_A = nn.Parameter(self.lora_A.half())
-
-        self.lora_B = nn.Parameter(self.lora_B.half())
+        # x = x.half()
 
       # self.scaling = self.scaling.half()
-      #   print("after: ",
-      # getattr(x, 'dtype', type(x)),
-      # getattr(self.lora_A, 'dtype', type(self.lora_A)),
-      # getattr(self.lora_B, 'dtype', type(self.lora_B)),
-      # getattr(self.scaling, 'dtype', type(self.scaling)))
+    #     print("after: ",
+    #   getattr(x, 'dtype', type(x)),
+    #   getattr(self.lora_A, 'dtype', type(self.lora_A)),
+    #   getattr(self.lora_B, 'dtype', type(self.lora_B)),
+    #   getattr(self.scaling, 'dtype', type(self.scaling)))
 
         return (self.lora_dropout(x) @ self.lora_A.T @ self.lora_B.T) * self.scaling
 
