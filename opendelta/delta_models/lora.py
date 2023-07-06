@@ -31,30 +31,14 @@ class LowRankLinear(nn.Module):
         else:
             self.lora_dropout = lambda x: x
         if r > 0:
-            #
-            self.lora_A = nn.Parameter(weight.float().new_zeros((r, in_features)))
-            self.lora_B = nn.Parameter(weight.float().new_zeros((out_features, r)))
-            #
+            ### change here
+            self.lora_A = nn.Parameter(weight.half().new_zeros((r, in_features)))
+            self.lora_B = nn.Parameter(weight.half().new_zeros((out_features, r)))
             self.scaling = self.lora_alpha / self.r
             nn.init.kaiming_uniform_(self.lora_A, a=math.sqrt(5))
             nn.init.zeros_(self.lora_B)
 
     def forward(self, x):
-    #     print("before: ",
-    #   getattr(x, 'dtype', type(x)),
-    #   getattr(self.lora_A, 'dtype', type(self.lora_A)),
-    #   getattr(self.lora_B, 'dtype', type(self.lora_B)),
-    #   getattr(self.scaling, 'dtype', type(self.scaling)))
-
-        # x = x.half()
-
-      # self.scaling = self.scaling.half()
-    #     print("after: ",
-    #   getattr(x, 'dtype', type(x)),
-    #   getattr(self.lora_A, 'dtype', type(self.lora_A)),
-    #   getattr(self.lora_B, 'dtype', type(self.lora_B)),
-    #   getattr(self.scaling, 'dtype', type(self.scaling)))
-
         return (self.lora_dropout(x) @ self.lora_A.T @ self.lora_B.T) * self.scaling
 
 @dataclass
